@@ -9,6 +9,8 @@ import ReactDOM from 'react-dom';
 import Camera from './components/Camera';
 import Text from './components/Text';
 import Sky from './components/Sky';
+import Candle from './components/Candle';
+import Cake from './components/Cake'
 
 class VRScene extends React.Component {
   constructor(props) {
@@ -19,32 +21,57 @@ class VRScene extends React.Component {
   changeColor() {
     const colors = ['red', 'orange', 'yellow', 'green', 'blue'];
     this.setState({
-      color: colors[Math.floor(Math.random() * colors.length)]
+      color: colors[ Math.floor(Math.random() * colors.length)]
     });
   }
 
   render () {
     return (
-      <Scene>
+      <Scene fog="type: linear; color: #AAA">
+        <a-assets>
+
+        </a-assets>
+
         <Camera>
           <a-cursor
-            animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
->
+            fuse="true"
+            animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150">
           </a-cursor>
         </Camera>
 
-        <Sky src="url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)"/>
+        <Sky
+          color="#000"
+        //  src="url(http://localhost:9090/sechelt.jpg)"
+        />
 
         <Text
-          text='Hello World!'
-          color='#DADADA'
-          position='-1.75 1 -3'/>
+          text={'Happy Birthday! '+ location.hash}
+          color='#3145b2'
+          position='-1.75 1 -3'
+        />
 
-        <Entity light={{type: 'ambient', color: '#888'}}/>
+          <Cake position="0 -1 -2"/>
+
+          <Entity
+            geometry={{
+              primitive:'plane',
+              width:30,
+              height:30
+            }}
+            rotation="-90 0 0"
+            position="0 -1 0"
+            material={{color:'#444'}}
+            >
+          </Entity>
+
+
+
+         <Entity light={{type: 'ambient', color: '#888'}}/>
+
         <Entity light={{type: 'directional', intensity: 0.5}} position='-1 1 0'/>
         <Entity light={{type: 'directional', intensity: 1}} position='1 1 0'/>
 
-        <Entity
+        {/* <Entity
           animation__rot={{property: 'rotation', dur: 2000, loop: true, to: '360 360 360'}}
           animation__sca={{property: 'scale', dir: 'alternate', dur: 100, loop: true, to: '1.1 1.1 1.1'}}
           geometry='primitive: box'
@@ -55,7 +82,7 @@ class VRScene extends React.Component {
             animation__scale={{property: 'scale', dir: 'alternate', dur: 100, loop: true, to: '2 2 2'}}
             geometry='primitive: box; depth: 0.2; height: 0.2; width: 0.2'
             material={{color: '#24CAFF'}}/>
-        </Entity>
+        </Entity> */}
       </Scene>
     );
   }
